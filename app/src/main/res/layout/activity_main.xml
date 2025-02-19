@@ -10,10 +10,9 @@
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendar_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="20dp"
         android:theme="@style/CalenderViewCustom"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
@@ -25,6 +24,22 @@
         app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"
         app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
         />
+
+    <TextView
+        android:id="@+id/calendar_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="24dp"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:text="2025.2.19 wed"
+        android:textStyle="bold"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calendar_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

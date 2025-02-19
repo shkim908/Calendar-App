@@ -53,7 +53,7 @@ object CalendarDecorators {
         }
     }
 
-    fun selectedMonthDecorator(context: Context, selectedMonth: Int): DayViewDecorator {
+    fun monthDecorator(context: Context, selectedMonth: Int): DayViewDecorator {
         return object : DayViewDecorator {
             override fun shouldDecorate(day: CalendarDay): Boolean = day.month != selectedMonth
             override fun decorate(view: DayViewFacade) {
@@ -69,7 +69,7 @@ object CalendarDecorators {
         }
     }
 
-    fun dayDecorator(context: Context, background: Int): DayViewDecorator {
+    fun selectedDayDecorator(context: Context, background: Int): DayViewDecorator {
         return object : DayViewDecorator {
             private val drawable = ContextCompat.getDrawable(context, background)
             override fun shouldDecorate(day: CalendarDay): Boolean = true

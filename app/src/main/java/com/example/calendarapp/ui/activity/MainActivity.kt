@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarapp.R
 import com.example.calendarapp.databinding.ActivityMainBinding
@@ -108,9 +109,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initList(){
         val scheduleList = ArrayList<ScheduleList>().apply {
-            add(ScheduleList(Color.RED, "Meeting", "10:00 AM"))
-            add(ScheduleList(Color.GREEN, "Lunch", "12:00 PM"))
-            add(ScheduleList(Color.BLUE, "Conference", "2:00 PM"))
+            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_red), "Meeting", "10:00 AM"))
+            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_orange), "Lunch", "12:00 PM"))
+            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_blue), "Conference", "2:00 PM"))
         }
 
         binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)

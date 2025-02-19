@@ -1,22 +1,21 @@
 package com.example.calendarapp.ui.adapter
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.calendarapp.databinding.ItemListCalendarScheduleBinding
+import com.example.calendarapp.ui.adapter.ScheduleAdapter.ScheduleViewHolder
 import com.example.calendarapp.ui.widget.ScheduleList
 
-class ScheduleAdapter(private val scheduleList: List<ScheduleList>) : RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
+class AddScheduleAdapter (private val scheduleList: List<ScheduleList>) : RecyclerView.Adapter<AddScheduleAdapter.AddScheduleViewHolder>() {
+    class AddScheduleViewHolder(val binding: ItemListCalendarScheduleBinding) : RecyclerView.ViewHolder(binding.root)
 
-    class ScheduleViewHolder(val binding: ItemListCalendarScheduleBinding) : RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddScheduleViewHolder {
         val binding = ItemListCalendarScheduleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ScheduleViewHolder(binding)
+        return AddScheduleViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AddScheduleViewHolder, position: Int) {
         val schedule = scheduleList[position]
 
         holder.binding.viewColor.setBackgroundColor(schedule.color)
@@ -25,7 +24,5 @@ class ScheduleAdapter(private val scheduleList: List<ScheduleList>) : RecyclerVi
     }
 
     override fun getItemCount(): Int = scheduleList.size
+
 }
-
-
-

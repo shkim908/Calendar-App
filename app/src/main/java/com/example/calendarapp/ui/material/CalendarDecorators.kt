@@ -53,6 +53,57 @@ object CalendarDecorators {
         }
     }
 
+    fun selectedMonthDecorator(context: Context, selectedMonth: Int): DayViewDecorator {
+        return object : DayViewDecorator {
+            override fun shouldDecorate(day: CalendarDay): Boolean = day.month != selectedMonth
+            override fun decorate(view: DayViewFacade) {
+                view.addSpan(
+                    ForegroundColorSpan(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.enabled_date_color
+                        )
+                    )
+                )
+            }
+        }
+    }
+
+    fun dayDecorator(context: Context, background: Int): DayViewDecorator {
+        return object : DayViewDecorator {
+            private val drawable = ContextCompat.getDrawable(context, background)
+            override fun shouldDecorate(day: CalendarDay): Boolean = true
+            override fun decorate(view: DayViewFacade) {
+                view.setSelectionDrawable(drawable!!)
+            }
+        }
+    }
+
+    fun todayDecorator(context: Context): DayViewDecorator {
+        return object : DayViewDecorator {
+            private val backgroundDrawable =
+                ContextCompat.getDrawable(context, R.drawable.calendar_circle_today)
+            private val today = CalendarDay.today()
+
+            override fun shouldDecorate(day: CalendarDay?): Boolean = day == today
+
+            override fun decorate(view: DayViewFacade?) {
+                view?.apply {
+                    setBackgroundDrawable(backgroundDrawable!!)
+                    addSpan(
+                        ForegroundColorSpan(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.main_color
+                            )
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+
 }
 
 

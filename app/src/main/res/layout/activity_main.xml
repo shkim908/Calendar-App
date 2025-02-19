@@ -11,7 +11,7 @@
         android:id="@+id/calendar_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp"
+        android:padding="20dp"
         android:theme="@style/CalenderViewCustom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
         app:mcv_leftArrowMask="@drawable/ic_arrow_back"
         app:mcv_rightArrowMask="@drawable/ic_arrow_forward"
         app:mcv_selectionMode="single"
-        app:mcv_showOtherDates="out_of_range"
+        app:mcv_showOtherDates="all"
         app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"
         app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
         />

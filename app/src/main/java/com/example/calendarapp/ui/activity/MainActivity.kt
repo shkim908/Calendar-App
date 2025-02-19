@@ -14,6 +14,7 @@ import com.example.calendarapp.R
 import com.example.calendarapp.databinding.ActivityMainBinding
 import com.example.calendarapp.ui.adapter.ScheduleAdapter
 import com.example.calendarapp.ui.material.CalendarDecorators
+import com.example.calendarapp.ui.popup.AddScheduleFragment
 import com.example.calendarapp.ui.widget.ScheduleList
 import com.example.calendarapp.viewmodel.MainActivityViewModel
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         initView()
         initList()
+        initBtn()
         viewModelObservable()
     }
 
@@ -96,6 +98,27 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun initList(){
+        val scheduleList = ArrayList<ScheduleList>().apply {
+            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_red), "Meeting", "10:00 AM"))
+            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_orange), "Lunch", "12:00 PM"))
+            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_blue), "Conference", "2:00 PM"))
+        }
+
+        binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)
+    }
+
+    private fun initBtn(){
+        binding.fbRegisterSchedule.setOnClickListener {
+            val fragment = AddScheduleFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+    }
+
     private fun viewModelObservable() {
         viewModel.selectedDate.observe(this) { date ->
             binding.calendarTv.text = date
@@ -107,16 +130,6 @@ class MainActivity : AppCompatActivity() {
         return LocalDate.of(year, month, day)
     }
 
-    private fun initList(){
-        val scheduleList = ArrayList<ScheduleList>().apply {
-            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_red), "Meeting", "10:00 AM"))
-            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_orange), "Lunch", "12:00 PM"))
-            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_blue), "Conference", "2:00 PM"))
-        }
-
-        binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)
-
-    }
 
 
 

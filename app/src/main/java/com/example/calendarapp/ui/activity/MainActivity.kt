@@ -1,14 +1,19 @@
 package com.example.calendarapp.ui.activity
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarapp.R
 import com.example.calendarapp.databinding.ActivityMainBinding
+import com.example.calendarapp.ui.adapter.ScheduleAdapter
 import com.example.calendarapp.ui.material.CalendarDecorators
+import com.example.calendarapp.ui.widget.ScheduleList
 import com.example.calendarapp.viewmodel.MainActivityViewModel
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -33,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initView()
+        initList()
         viewModelObservable()
     }
 
@@ -98,6 +104,17 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun CalendarDay.toLocalDate(): LocalDate {
         return LocalDate.of(year, month, day)
+    }
+
+    private fun initList(){
+        val scheduleList = ArrayList<ScheduleList>().apply {
+            add(ScheduleList(Color.RED, "Meeting", "10:00 AM"))
+            add(ScheduleList(Color.GREEN, "Lunch", "12:00 PM"))
+            add(ScheduleList(Color.BLUE, "Conference", "2:00 PM"))
+        }
+
+        binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)
+
     }
 
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "950840198948",
+    "project_id": "schedule-data-cab3c",
+    "storage_bucket": "schedule-data-cab3c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950840198948:android:7686db08208212718695b1",
+        "android_client_info": {
+          "package_name": "com.example.calendarapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-FfugaFmfpctvWsD4fsE0PExvuaxCJdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

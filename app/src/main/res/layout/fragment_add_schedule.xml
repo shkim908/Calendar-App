@@ -61,16 +61,53 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_schedule"
+        <EditText
+            android:id="@+id/title_et"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/al_main_appbar" />
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="@string/input_schedule"
+            app:layout_constraintTop_toBottomOf="@+id/al_main_appbar" />
+
+        <LinearLayout
+            android:id="@+id/time_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/title_et">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time >"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="9:00 AM"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="15sp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:gravity="end" />
+
+        </LinearLayout>
+
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recycler_view_schedule"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:orientation="vertical"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/time_layout" />-->
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

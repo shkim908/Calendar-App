@@ -12,9 +12,12 @@ import com.example.calendarapp.databinding.FragmentAddScheduleBinding
 import com.example.calendarapp.ui.adapter.AddScheduleAdapter
 import com.example.calendarapp.ui.adapter.ScheduleAdapter
 import com.example.calendarapp.ui.widget.ScheduleList
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class AddScheduleFragment : Fragment() {
     private lateinit var binding: FragmentAddScheduleBinding
+    val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +45,6 @@ class AddScheduleFragment : Fragment() {
             add(ScheduleList(ContextCompat.getColor(requireContext(), R.color.calender_color_blue), "Conference", "2:00 PM"))
         }
 
-        binding.recyclerViewSchedule.adapter = AddScheduleAdapter(scheduleList)
+//        binding.recyclerViewSchedule.adapter = AddScheduleAdapter(scheduleList)
     }
 }

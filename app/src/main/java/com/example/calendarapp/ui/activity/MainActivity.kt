@@ -1,6 +1,7 @@
 package com.example.calendarapp.ui.activity
 
 import android.graphics.Color
+import android.graphics.Insets.add
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -17,8 +18,15 @@ import com.example.calendarapp.ui.material.CalendarDecorators
 import com.example.calendarapp.ui.popup.AddScheduleFragment
 import com.example.calendarapp.ui.widget.ScheduleList
 import com.example.calendarapp.viewmodel.MainActivityViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
@@ -49,6 +57,9 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initView() = with(binding){
         with(calendarView) {
+            val today = LocalDate.now()
+            viewModel.setSelectedDate(CalendarDay.from(today.year, today.monthValue, today.dayOfMonth))
+
             mSelectedDayDecorator = CalendarDecorators.selectedDayDecorator(applicationContext, R.drawable.calendar_selector)
             mTodayDecorator = CalendarDecorators.todayDecorator(applicationContext)
             mSundayDecorator = CalendarDecorators.sundayDecorator(applicationContext)
@@ -64,7 +75,6 @@ class MainActivity : AppCompatActivity() {
                 mSaturdayDecorator,
                 mMonthDecorator
             )
-
             setOnMonthChangedListener { widget, date ->
                 widget.clearSelection()
                 removeDecorators()
@@ -78,12 +88,11 @@ class MainActivity : AppCompatActivity() {
                     mSaturdayDecorator,
                     mMonthDecorator
                 )
-                val today = LocalDate.now()
+
                 val clickedDay = if (date.toLocalDate().month == today.month)
                     CalendarDay.from(today.year, today.monthValue, today.dayOfMonth)
                 else
                     CalendarDay.from(date.year, date.month, 1)
-
                 widget.setSelectedDate(clickedDay)
                 viewModel.setSelectedDate(clickedDay)
 
@@ -98,17 +107,49 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    suspend fun getEventsByDate(date: String): List<String>{
+        return try {
+            val snapshot = FirebaseFirestore.getInstance()
+                .collection("schedules").document(date)
+                .collection("event")
+                .get().await()
+
+            val titles = snapshot.documents.mapNotNull { it.getString("title") }
+
+            if (titles.isEmpty()) {
+                listOf("nothing")
+            } else {
+                titles
+            }
+        } catch (e: Exception){
+            listOf("nothing")
+        }
+    }
+
     private fun initList(){
-        val scheduleList = ArrayList<ScheduleList>().apply {
-            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_red), "Meeting", "10:00 AM"))
-            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_orange), "Lunch", "12:00 PM"))
-            add(ScheduleList(ContextCompat.getColor(applicationContext, R.color.calender_color_blue), "Conference", "2:00 PM"))
+        var color: Int = R.color.calender_color_gray
+        var title: String
+        var time: String = "9:00 AM"
+
+
+        GlobalScope.launch {
+            val events = getEventsByDate(binding.calendarTv.text.toString())
+            withContext(Dispatchers.Main){
+
+                val scheduleList = ArrayList<ScheduleList>().apply {
+                    add(ScheduleList(ContextCompat.getColor(applicationContext, color), events.toString(), ""))
+                }
+                binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)
+            }
         }
 
-        binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)
+
+
+
     }
 
     private fun initBtn(){
+
         binding.fbRegisterSchedule.setOnClickListener {
             val fragment = AddScheduleFragment()
             supportFragmentManager.beginTransaction()

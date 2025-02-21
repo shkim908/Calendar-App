@@ -36,8 +36,6 @@ class ScheduleAdapter(private val scheduleList: List<ScheduleList>) : RecyclerVi
 
     }
 
-
-
     override fun getItemCount(): Int = scheduleList.size
 }
 

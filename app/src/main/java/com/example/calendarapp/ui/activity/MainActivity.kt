@@ -97,11 +97,12 @@ class MainActivity : AppCompatActivity() {
                     CalendarDay.from(date.year, date.month, 1)
                 widget.setSelectedDate(clickedDay)
                 viewModel.setSelectedDate(clickedDay)
-
+                initList()
             }
 
             setOnDateChangedListener { _, date, _ ->
                 viewModel.setSelectedDate(date)
+                initList()
             }
         }
 
@@ -138,7 +139,6 @@ class MainActivity : AppCompatActivity() {
                 getEventsByDate(binding.calendarTv.text.toString())
             }
         }
-//        binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)
     }
 
     private fun initBtn(){

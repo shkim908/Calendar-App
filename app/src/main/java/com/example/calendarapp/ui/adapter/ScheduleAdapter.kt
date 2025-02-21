@@ -31,8 +31,9 @@ class ScheduleAdapter(private val scheduleList: List<ScheduleList>) : RecyclerVi
 
         if(holder.binding.tvSchedule.text == "nothing"){
             holder.binding.tvDatetime.visibility = View.GONE
-            holder.binding.tvSchedule.setTextColor(ContextCompat.getColor(holder.binding.tvSchedule.context, R.color.calender_color_gray))
+            holder.binding.recyclerV.alpha = 0.5f
         }
+
     }
 
 

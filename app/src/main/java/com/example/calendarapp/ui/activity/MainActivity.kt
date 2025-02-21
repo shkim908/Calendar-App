@@ -124,12 +124,17 @@ class MainActivity : AppCompatActivity() {
                         add(item)
                     }
                 }
+                if(scheduleList.isEmpty()) {
+                    Log.d("MainActivity", "scheduleList is Empty")
+                    scheduleList.apply {
+                        add(ScheduleList(R.color.calender_color_gray, "nothing", ""))
+                    }
+                }
                 binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)
             }
             .addOnFailureListener{
                 Log.d("MainActivity", "Error!!! ")
             }
-
 
     }
 

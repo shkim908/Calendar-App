@@ -1,9 +1,11 @@
 package com.example.calendarapp.ui.activity
 
+import android.app.Person
 import android.graphics.Color
 import android.graphics.Insets.add
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -107,45 +109,36 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    suspend fun getEventsByDate(date: String): List<String>{
-        return try {
-            val snapshot = FirebaseFirestore.getInstance()
-                .collection("schedules").document(date)
-                .collection("event")
-                .get().await()
+    private fun getEventsByDate(date: String){
+        val scheduleList : ArrayList<ScheduleList> = arrayListOf()
 
-            val titles = snapshot.documents.mapNotNull { it.getString("title") }
-
-            if (titles.isEmpty()) {
-                listOf("nothing")
-            } else {
-                titles
-            }
-        } catch (e: Exception){
-            listOf("nothing")
-        }
-    }
-
-    private fun initList(){
-        var color: Int = R.color.calender_color_gray
-        var title: String
-        var time: String = "9:00 AM"
-
-
-        GlobalScope.launch {
-            val events = getEventsByDate(binding.calendarTv.text.toString())
-            withContext(Dispatchers.Main){
-
-                val scheduleList = ArrayList<ScheduleList>().apply {
-                    add(ScheduleList(ContextCompat.getColor(applicationContext, color), events.toString(), ""))
+        FirebaseFirestore.getInstance()
+            .collection("Schedule").document(date)
+            .collection("events")
+            .get().addOnSuccessListener { result ->
+                scheduleList.clear()
+                for (document in result) {
+                    val item = ScheduleList(R.color.date_color, document["title"] as String, document["memo"] as String)
+                    scheduleList.apply {
+                        add(item)
+                    }
                 }
                 binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)
             }
+            .addOnFailureListener{
+                Log.d("MainActivity", "Error!!! ")
+            }
+
+
+    }
+
+    private fun initList(){
+        GlobalScope.launch {
+            withContext(Dispatchers.Main){
+                getEventsByDate(binding.calendarTv.text.toString())
+            }
         }
-
-
-
-
+//        binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)
     }
 
     private fun initBtn(){

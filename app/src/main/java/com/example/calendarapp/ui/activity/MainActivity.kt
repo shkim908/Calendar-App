@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initView() = with(binding){
         with(calendarView) {
@@ -119,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             .get().addOnSuccessListener { result ->
                 scheduleList.clear()
                 for (document in result) {
-                    val item = ScheduleList(R.color.date_color, document["title"] as String, document["memo"] as String)
+                    val item = ScheduleList(R.color.date_color, document["title"] as String, document["time"] as String)
                     scheduleList.apply {
                         add(item)
                     }

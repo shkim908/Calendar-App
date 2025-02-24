@@ -83,13 +83,6 @@
             android:hint="@string/input_schedule"
             app:layout_constraintTop_toBottomOf="@+id/date_tv" />
 
-        <EditText
-            android:id="@+id/time_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:hint="memo"
-            app:layout_constraintTop_toBottomOf="@+id/title_et" />
 
         <LinearLayout
             android:id="@+id/time_layout"
@@ -97,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/time_et">
+            app:layout_constraintTop_toBottomOf="@+id/title_et">
 
             <TextView
                 android:id="@+id/time_tv"
@@ -113,7 +106,7 @@
                 android:id="@+id/hour_min_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="9:00 AM"
+                android:text="9 : 00 AM"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="15sp"
                 android:layout_marginStart="20dp"

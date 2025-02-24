@@ -80,11 +80,11 @@ class AddScheduleFragment : Fragment() {
         binding.tvComplete.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
             val title = binding.titleEt.text.toString()
-            val memo = binding.timeEt.text.toString()
+            val time = binding.hourMinTv.text.toString()
             val date = binding.dateTv.text.toString()
             val event = hashMapOf(
                 "title" to title,
-                "memo" to memo
+                "time" to time
             )
 
             db.collection("Schedule").document(date)

@@ -2,7 +2,10 @@ package com.example.calendarapp.ui.material
 
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.text.style.ForegroundColorSpan
+import android.text.style.LineBackgroundSpan
 import androidx.core.content.ContextCompat
 import com.example.calendarapp.R
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
@@ -103,7 +106,58 @@ object CalendarDecorators {
         }
     }
 
+    fun eventDecorator(context: Context, colorRes: IntArray, date: CalendarDay): DayViewDecorator {
+        return object : DayViewDecorator {
+            private val colors: IntArray = IntArray(colorRes.size)
 
+            init {
+                for (i in colorRes.indices) {
+                    colors[i] = ContextCompat.getColor(context, colorRes[i])
+                }
+            }
+
+            override fun shouldDecorate(day: CalendarDay?): Boolean {
+                return date == day
+            }
+
+            override fun decorate(view: DayViewFacade) {
+                view.addSpan(CustomMultipleDotSpan(7f, colors))
+            }
+        }
+    }
+
+
+
+}
+
+class CustomMultipleDotSpan(private val radius: Float, private val colors: IntArray) :
+    LineBackgroundSpan {
+    override fun drawBackground(
+        canvas: Canvas,
+        paint: Paint,
+        left: Int,
+        right: Int,
+        top: Int,
+        baseline: Int,
+        bottom: Int,
+        text: CharSequence,
+        start: Int,
+        end: Int,
+        lineNumber: Int
+    ) {
+        val totalDots = minOf(colors.size, 5)
+        val dotSpacing = 18
+        val startX = (left + right) / 2 - (totalDots - 1) * dotSpacing / 2
+
+        for (i in 0 until totalDots) {
+            val oldColor = paint.color
+            if (colors[i] != 0) {
+                paint.color = colors[i]
+            }
+            canvas.drawCircle(startX + i * dotSpacing.toFloat(), bottom + radius, radius, paint)
+            paint.color = oldColor
+        }
+    }
 }
 
 

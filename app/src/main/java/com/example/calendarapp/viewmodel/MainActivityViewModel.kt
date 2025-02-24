@@ -9,23 +9,23 @@ import java.util.Calendar
 import java.util.Locale
 
 class MainActivityViewModel : ViewModel() {
-    private val mSelectedDate = MutableLiveData<String>()  // 선택된 날짜 저장
-    val selectedDate: LiveData<String> get() = mSelectedDate  // 외부에서 읽기만 가능
+    private val mSelectedDate = MutableLiveData<String>()
+    val selectedDate: LiveData<String> get() = mSelectedDate
 
     fun setSelectedDate(date: CalendarDay) {
         val calendar = Calendar.getInstance().apply {
-            set(date.year, date.month - 1, date.day) // month는 0부터 시작하므로 -1
+            set(date.year, date.month - 1, date.day)
         }
 
-        val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time) // 요일 가져오기 (Mon, Tue 등)
+        val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
         val formattedDate = "${date.year}.${date.month}.${date.day} $dayOfWeek"
 
         mSelectedDate.value = formattedDate
     }
 
     fun onMonthChanged(year: Int, month: Int) {
-        val firstDay = CalendarDay.from(year, month, 1) // 새 달의 1일
-        setSelectedDate(firstDay) // 자동으로 1일을 선택
+        val firstDay = CalendarDay.from(year, month, 1)
+        setSelectedDate(firstDay)
     }
 
 

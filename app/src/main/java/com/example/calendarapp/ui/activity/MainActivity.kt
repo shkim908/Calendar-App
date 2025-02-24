@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarapp.R
 import com.example.calendarapp.databinding.ActivityMainBinding
@@ -124,6 +125,7 @@ class MainActivity : AppCompatActivity() {
                     scheduleList.apply {
                         add(item)
                     }
+
                 }
                 if(scheduleList.isEmpty()) {
                     Log.d("MainActivity", "scheduleList is Empty")
@@ -131,6 +133,7 @@ class MainActivity : AppCompatActivity() {
                         add(ScheduleList(R.color.calender_color_gray, "nothing", ""))
                     }
                 }
+
                 binding.recyclerViewSchedule.adapter = ScheduleAdapter(scheduleList)
             }
             .addOnFailureListener{
@@ -143,6 +146,7 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch {
             withContext(Dispatchers.Main){
                 getEventsByDate(binding.calendarTv.text.toString())
+
             }
         }
     }
@@ -160,7 +164,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun viewModelObservable() {
-        viewModel.selectedDate.observe(this) { date ->
+
+            viewModel.selectedDate.observe(this) { date ->
             binding.calendarTv.text = date
         }
     }

@@ -23,6 +23,9 @@ class AddScheduleFragment : Fragment() {
     private lateinit var binding: FragmentAddScheduleBinding
     private val viewModel: MainActivityViewModel by activityViewModels()
 
+    private var selectedHour = 9
+    private var selectedMinute = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,21 +53,28 @@ class AddScheduleFragment : Fragment() {
 
         binding.timeTv.setOnClickListener {
             val cal = Calendar.getInstance()
-            var hour = cal.get(Calendar.HOUR)
-            var minute = cal.get(Calendar.MINUTE)
-            val timeSetListener = OnTimeSetListener {
-                override fun onTimeSet(p0: TimePicker?, p1: Int, p2: Int) {
-                    hour = p1
-                    minute = p2
-                    
-
-
+            val hour = if (selectedHour == -1) cal.get(Calendar.HOUR_OF_DAY) else selectedHour
+            val minute = if (selectedMinute == -1) cal.get(Calendar.MINUTE) else selectedMinute
+            val timeSetListener = OnTimeSetListener { view, hour, minute ->
+                val amPm: String
+                val hourFormatted: Int
+                selectedHour = hour
+                selectedMinute = minute
+                if (hour >= 12) {
+                    amPm = "PM"
+                    hourFormatted = if (hour > 12) hour - 12 else hour
+                } else {
+                    amPm = "AM"
+                    hourFormatted = if (hour == 0) 12 else hour
                 }
+
+                binding.hourMinTv.text = String.format("%d : %02d %s", hourFormatted, minute, amPm)
             }
             TimePickerDialog(requireContext(), timeSetListener,
-                Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
-                Calendar.getInstance().get(Calendar.MINUTE),
-                true).show()
+                hour,
+                minute,
+                false).show()
+
         }
 
         binding.tvComplete.setOnClickListener {
